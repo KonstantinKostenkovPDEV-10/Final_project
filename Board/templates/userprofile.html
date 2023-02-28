@@ -1,0 +1,93 @@
+<!--  наследуемся от шаблона default.html-->
+{% extends 'flatpages/default.html' %} 
+ {% load static %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block content %}
+
+
+<h1>Здесь вы можете проводить модерацию откликов на ваши объявления!</h1>
+
+<hr>
+<a href="{% url 'announcement_create' %}">Добавить новое объявление</a> <br> 
+<hr>
+<h3>Выберите объявление</h3>
+	
+<br> 
+<form action="" method="post">
+    {% csrf_token %}    
+	 {% for p in announcement_user %}
+ <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="{{p.id}}" name="boxes"/>
+    <label class="form-check-label" for="mango">{{ p.header}}</label>
+	<a href="{% url 'announcement_update' p.id %}"><u> Редактировать </u></a> <!-- добавим ссылку на удаление-->
+	<a href="{% url 'announcement_delete' p.id %}"><u> Удалить </u></a> <!-- добавим ссылку на удаление-->
+  </div>
+
+<br> 
+{% endfor %}
+    <input type="submit" class="expanded button" value="Показать отклики по данному объявлению">
+</form>
+
+<br> 
+
+<form action="" method="get">
+    {% csrf_token %}    
+    <input type="submit" class="expanded button" value="Список моих объявлений">
+</form>
+<hr>
+
+<h3>Отклики</h3>
+<br> 
+<table border=1>
+   <tr>
+    		<th>#</th>
+            <th>Дата</th>
+            <th>Пользователь</th>
+            <th>Текст отклика</th>
+	
+  </tr>
+  
+  {% for p in context %}
+ <tr>
+    <td>{{ p.id }}</td>
+   	<td>{{ p.date_create}}</td>
+	<td>{{ p.user }}</td>
+    <td>{{ p.response_text}}</td>
+	<td>
+	    <a href="{% url 'moderation_update' p.id %}"><u>Принять</u></a>
+		<a href="{% url 'moderation_delete' p.id %}"><u> Удалить </u></a> 
+	</td>	
+    </tr>
+{% endfor %}	
+
+</table>
+
+<!-- Проверяем, что поддерживается постраничный вывод-->
+{% if is_paginated %}
+
+    <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
+{% if page_obj.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+{% endif %}
+
+    <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+{% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <a>{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+{% endfor %}
+{% endif %}
+    <!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
+{% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">>>></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+{% endif %}
+ 
+{% endblock content %}

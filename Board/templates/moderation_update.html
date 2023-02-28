@@ -1,0 +1,32 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% load static %}
+
+
+{% block title %}
+Add post
+{% endblock title %}
+
+{% block content %}
+
+<hr>
+
+<form action="" method="post">
+    {% csrf_token %}    
+	{% csrf_token %}    
+    {{ form.media }}
+   <a>Пользователь:</a> {{form.user|safe }}<br>	
+   <br>	
+   <a>Тескт отклика:</a>  <br>
+   {{ form.response_text|safe }} <br>	
+   <br>	
+   <a>Принять:</a> {{ form.activated|safe }} <br>	
+   <br>	
+  
+    <input type="submit" class="expanded button" value="Опубликовать">
+</form>
+
+
+
+{% endblock content %}

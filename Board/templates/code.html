@@ -1,0 +1,38 @@
+<!--  наследуемся от шаблона default.html-->
+{% extends 'flatpages/default.html' %} 
+
+{% block title %}
+Регистрация
+{% endblock title %}
+
+{% block content %}
+
+<h2> Активация </h2>
+<hr>
+<h5>Код для завершения регистрации отправлен на электронную почту, указанную Вами. </h5>
+<h5>В случае если код Вами не получен нажмите "Запросить код" и на вашу почту будет отпрален код активации, затем введите его в соответствующее поле </h5>
+<hr>
+<form action="" method="get">
+{% csrf_token %}
+<input type="submit" value="Запросить код">
+<hr class="my-4" />
+</form>
+
+<form method="post">
+{% csrf_token %}
+<p><b>Введите код:</b></p>
+    <p><textarea rows="1" cols="10" name="code"></textarea></p>
+    <p><input type="submit" value="Продолжить"></p>
+<hr class="my-4" />
+{% if activation == 1 %}
+    <h2>Вы ввели не верный код</h2>
+	{% endif %}
+{% if activation == 10 %}
+     <a class="navbar-brand" href="/sign/login">ВОЙТИ</span>
+	{% endif %}	
+</form>
+{% endblock %}
+
+
+
+

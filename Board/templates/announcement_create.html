@@ -1,0 +1,33 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% load static %}
+
+
+{% block title %}
+Add announcemnt
+{% endblock title %}
+
+{% block content %}
+
+<hr>
+
+
+<form action="" method="post">
+    {% csrf_token %}    
+    {{ form.media }}
+   <a>Пользователь:</a> {{form.user|safe }}<br>	
+   <br>	
+   <a>Категория:</a> {{ form.announcement_category|safe }} <br>	
+   <br>	
+   <a>Название объявления:</a> {{ form.header|safe }} <br>	
+   <br>	
+   <a>Текст объявления:</a> <br>
+   {{ form.announcement_text|safe }} <br>	
+
+    <input type="submit" class="expanded button" value="ОПУБЛИКОВАТЬ">
+</form>
+
+
+
+{% endblock content %}

@@ -1,0 +1,26 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Announcement delete
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<hr>
+<hr>
+<h2>Вы действительно хотите удалить даннное объявление?</h2>
+
+<hr>
+<p>{{ Announcement.header }}</p>
+<p>{{ Announcement.date_create}}</p>
+<p>{{ Announcement.announcement_text|safe }}</p>
+<p>{{ Announcement.media }}</p>
+
+
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+{% endblock content %}
+

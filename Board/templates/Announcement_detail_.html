@@ -1,0 +1,42 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %} 
+
+{% block title %}
+post
+{% endblock title %}
+
+
+{% block content %}
+<hr>
+<p><h2>{{ Announcement.title_news }}</h2></p>
+<p>Дата создания {{ Announcement.date_time_create}}</p>
+<td>{{ Announcement.post }}</td>
+
+<hr>
+<h1>Коментарии</h1>
+<ul>
+
+{% for item in post.post_comment.all %}
+<li>
+<td>Дата создания: {{item.date_create}}</td><br>
+<td>Автор: {{item.user}}</td><br>
+<td>{{item.comment_text}}</td><br>
+</li>
+{% endfor %}
+<ul>
+<p>Добавить новый комментарий:</p>
+{%if messages %}
+{%for m in messages%}
+<span style="background-color: #FFFF00">{{m}}</span>
+{%endfor%}
+{%endif%}
+
+<div.class="col-4" >
+<form action="" id="add_form" method="post" >
+  {% csrf_token %}
+{{form.as_p}}
+ <button form="add_form" type="submit">Добавить</button>
+</form>
+</div>
+{% endblock content %}
+

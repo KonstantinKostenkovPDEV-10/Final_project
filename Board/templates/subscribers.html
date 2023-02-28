@@ -1,0 +1,29 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %} 
+
+{% block title %}
+subscribers
+{% endblock title %}
+
+
+{% block content %}
+<hr>
+
+
+<form method="POST"action="{% url 'subscribers' %}">
+<hr>
+<hr>
+<p>Выберите категорию новости</p>
+{% csrf_token %}
+{{form}}
+<input type="submit" value="Подписаться">
+
+
+</form>
+
+
+{% endblock content %}
+
+
+	
+

@@ -1,0 +1,24 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Response
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<hr>
+<hr>
+<h2>Вы действительно хотите удалить данный отклик?</h2>
+
+<hr>
+<p>{{ response.header }}</p>
+<p>{{ response.date_create}}</p>
+<p>{{ response.response_text }}</p>
+
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Подтвердить"></form>
+{% endblock content %}
+

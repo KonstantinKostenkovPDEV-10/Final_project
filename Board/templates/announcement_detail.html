@@ -1,0 +1,46 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %} 
+
+{% block title %}
+Announcement detail
+{% endblock title %}
+
+
+{% block content %}
+<hr>
+<p><h2>{{ Announcement.header }}</h2></p>
+<p>Дата создания {{ Announcement.date_create}}</p>
+<p>{{ Announcement.announcement_text|safe }}</p>
+<p>{{ Announcement.media }}</p>
+
+<hr>
+<h1>Отклики</h1>
+<ul>
+
+<ul>
+<p>Добавить новый отклик:</p>
+
+{% for item in Announcement.announcement_response.all %}
+<li>
+<td>Дата создания: {{item.date_create}}</td><br>
+<td>Автор: {{item.user}}</td><br>
+<td>{{item.response_text}}</td><br>
+</li>
+{% endfor %}
+<ul>
+{%if messages %}
+{%for m in messages%}
+<span style="background-color: #FFFF00">{{m}}</span>
+{%endfor%}
+{%endif%}
+
+
+<div.class="col-4" >
+<form action="" id="add_form" method="post" >
+  {% csrf_token %}
+{{form.as_p}}
+ <button form="add_form" type="submit">Добавить</button>
+</form>
+</div>
+{% endblock content %}
+
